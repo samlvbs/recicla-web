@@ -1,0 +1,71 @@
+<!-- <div class="purchase-list">
+  <h3>Compras Cadastradas</h3>
+  <div *ngFor="let purchase of purchases$ | async">
+    <h4>{{ purchase.supplierName }}</h4>
+    <ul>
+      <li *ngFor="let product of purchase.products">
+        {{ product.productName }} - {{ product.quantity }} x {{ product.price }} = {{ product.total }}
+      </li>
+    </ul>
+  </div>
+</div> -->
+<app-navbar></app-navbar>
+<div class="purchase-cards">
+  <div class="total-sum">
+    <h2>Valor total: R${{ totalSum }}</h2>
+  </div>
+  <ng-container *ngFor="let purchase of purchases">
+    <div class="purchase-card">
+      <h3>{{ purchase.supplierName }}</h3>
+      <p>Data da Compra: {{ purchase.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>
+      <div class="products">
+        <div *ngFor="let product of purchase.products" class="product-item">
+          <p><strong>Produto:</strong> {{ product.productName }}</p>
+          <p><strong>Quantidade:</strong> {{ product.quantity }}</p>
+          <p><strong>Preço:</strong> R${{ product.price }}</p>
+          <p><strong>Total:</strong> R${{ product.total }}</p>
+        </div>
+        <div class="total">
+          <p><strong>Somatório da Compra:</strong> R${{ purchase.totalSum }}</p>
+          <button class="cancel-btn" (click)="deletePurchase(purchase.id)" class="delete-btn">Excluir Compra</button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<!-- Modal de Confirmação -->
+<!-- <div *ngIf="showDeleteModal" class="modal">
+  <div class="modal-content">
+    <p>Tem certeza de que deseja excluir esta compra?</p>
+    <button (click)="deletePurchase(purchase.id)" class="confirm-btn">Sim, Excluir</button>
+    <button (click)="closeDeleteModal()" class="cancel-btn">Cancelar</button>
+  </div>
+</div> -->
+<!-- <div class="purchase-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Fornecedor</th>
+        <th>Data da Compra</th>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th>Preço</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let purchase of purchases">
+        <tr *ngFor="let product of purchase.products">
+          <td>{{ purchase.supplierName }}</td>
+          <td>{{ purchase.createdAt}}</td>
+          <td>{{ product.productName }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>R${{ product.price }}</td>
+          <td>R${{ product.total }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div> -->
+

@@ -1,0 +1,44 @@
+<app-navbar></app-navbar>
+<div class="form-container">
+  <form class="form" [formGroup]="purchaseForm" (ngSubmit)="openModal()">
+    <label>
+      Nome do Fornecedor:
+      <input formControlName="supplierName" placeholder="Ex: Ulisses" />
+    </label>
+    <div class="products">
+      <h3>Produtos</h3>
+      <button type="button" (click)="addProduct()">+ Adicionar Produto</button>
+      <div formArrayName="products" *ngFor="let product of products.controls; let i = index">
+        <div [formGroupName]="i" class="product-item">
+          <label>
+            Produto:
+            <input formControlName="productName" placeholder="Ex: Arroz" />
+          </label>
+          <label>
+            Quantidade:
+            <input type="number" formControlName="quantity" />
+          </label>
+          <label>
+            Preço:
+            <input type="number" formControlName="price" />
+          </label>
+          <label>
+            <p>Total:</p>
+            <input formControlName="total"  />
+          </label>
+          <button type="button" (click)="removeProduct(i)">Remover</button>
+        </div>
+      </div>
+    </div>
+    <button type="submit" [disabled]="!purchaseForm.valid">Salvar Compra</button>
+  </form>
+</div>
+<div class="modal" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <h2>Preço Total da Compra</h2>
+    <p>Fornecedor: {{ purchaseForm.value.supplierName }}</p>
+    <p>Preço Total: R$ {{ calculateTotalPrice() | number: '1.2-2' }}</p>
+    <button (click)="confirmPurchase()">Confirmar</button>
+    <button (click)="closeModal()">Cancelar</button>
+  </div>
+</div>
