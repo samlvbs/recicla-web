@@ -28,8 +28,8 @@ export class PurchaseFormComponent {
   addProduct() {
     const productGroup = this.fb.group({
       productName: ['', Validators.required],
-      quantity: [1, [Validators.required, Validators.min(1)]],
-      price: [0, [Validators.required, Validators.min(0)]],
+      quantity: [[Validators.required, Validators.min(0)]],
+      price: [[Validators.required, Validators.min(0)]],
       total: [{ value: 0, disabled: true }],
     });
 
