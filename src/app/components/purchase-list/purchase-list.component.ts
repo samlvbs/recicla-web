@@ -21,7 +21,6 @@ interface Purchase {
   styleUrls: ['./purchase-list.component.scss'],
 })
 export class PurchaseListComponent implements OnInit {
-  //purchases$: Observable<any[]>;
   private readonly purchaseService_ = inject(PurchaseService);
   products: any[] = [];
   purchases: any[] = [];
@@ -30,22 +29,9 @@ export class PurchaseListComponent implements OnInit {
   purchaseToDelete: Purchase | null = null;
 
   constructor(private purchaseService: PurchaseService) {
-    // this.purchaseService_.getCollectionWithQuery('purchases', 'campo', 'valor').subscribe(data => {
-    //   console.log('Filtrados:', data);
-    // });
   }
 
   ngOnInit() {
-    // Obter os produtos do documento
-    // this.purchaseService.getProducts(this.purchaseId).subscribe(data => {
-    //   this.products = data;
-    //   console.log('Produtos:', this.products);
-    // });
-    //Funcionou ->
-    // this.purchaseService.getAllProducts().subscribe(data => {
-    //   this.products = data;
-    //   console.log('Todos os Produtos:', this.products);
-    // });
     this.purchaseService.getAllPurchases().subscribe(data => {
       this.purchases = data.map(purchase => ({
         ...purchase,
@@ -84,7 +70,7 @@ export class PurchaseListComponent implements OnInit {
   deletePurchase(id: string) {
     if (confirm('Tem certeza que deseja excluir esta compra?')) {
       this.purchaseService.deletePurchase(id).then(() => {
-        // Após a exclusão, recarregue a lista de compras
+
         this.purchases = this.purchases.filter((purchase) => purchase.id !== id);
         alert('Compra excluída com sucesso!');
       }).catch((error) => {

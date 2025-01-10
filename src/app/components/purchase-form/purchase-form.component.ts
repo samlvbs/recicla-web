@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Firestore, collection, addDoc, serverTimestamp } from '@angular/fire/firestore';
-import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 @Component({

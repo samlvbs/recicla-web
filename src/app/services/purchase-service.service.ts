@@ -1,11 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { collection, collectionData, query } from '@angular/fire/firestore';
-import { Firestore,doc, deleteDoc } from 'firebase/firestore';
+import { collection, collectionData} from '@angular/fire/firestore';
+
 import { map, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root', // Torna o serviço disponível globalmente
+  providedIn: 'root',
 })
 export class PurchaseService {
 
@@ -34,14 +34,14 @@ export class PurchaseService {
       .doc(`purchases/${purchaseId}`)
       .valueChanges()
       .pipe(
-        map((document: any) => document?.products || []) // Retorna o array de produtos ou vazio
+        map((document: any) => document?.products || [])
       );
   }
 
   getAllProducts(): Observable<any[]> {
     return this.afs.collection('purchases').valueChanges().pipe(
       map((documents: any[]) =>
-        documents.flatMap(doc => doc.products || []) // Combina os arrays de produtos
+        documents.flatMap(doc => doc.products || [])
       )
     );
   }
@@ -50,9 +50,9 @@ export class PurchaseService {
     return this.afs.collection('purchases').snapshotChanges().pipe(
       map(actions =>
         actions.map(a => {
-          const id = a.payload.doc.id; // ID do documento
-          const data = a.payload.doc.data() as any; // Dados do documento
-          return { id, ...data }; // Combina o ID com os dados
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as any;
+          return { id, ...data };
         })
       )
     );
@@ -60,13 +60,13 @@ export class PurchaseService {
 
   convertTimestampToDate(timestamp: any): string {
     if (!timestamp || !timestamp.toDate) {
-      return 'Data não disponível'; // Mensagem padrão ou outro tratamento
+      return 'Data não disponível';
     }
-    const date = timestamp.toDate(); // Converte o Timestamp do Firestore para uma instância de Date
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString(); // Formata para data e hora legíveis
+    const date = timestamp.toDate();
+    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
   }
 
   deletePurchase(id: string){
-    return this.afs.doc(`purchases/${id}`).delete()// Deleta o documento
+    return this.afs.doc(`purchases/${id}`).delete()
   }
 }
