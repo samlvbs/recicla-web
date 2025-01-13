@@ -39,7 +39,6 @@ export class PurchaseListComponent implements OnInit {
       }));
       this.calculateTotalSum()
       this.calculateTotalPurhcase()
-      console.log('Todas as Compras:', this.purchases);
     });
   }
 

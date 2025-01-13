@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div class="product-form">
+  <h2>Cadastrar Produto</h2>
+  <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+    <label>
+      Nome do Produto:
+      <input type="text" formControlName="name" placeholder="Nome do Produto" />
+    </label>
+    <label>
+      Preço de Compra:
+      <input type="number" formControlName="purchasePrice" placeholder="Preço de Compra" />
+    </label>
+    <label>
+      Preço de Venda:
+      <input type="number" formControlName="salePrice" placeholder="Preço de Venda" />
+    </label>
+    <label>
+      Lucro:
+      <input type="number" formControlName="profit" placeholder="Lucro" />
+    </label>
+    <button type="submit" [disabled]="productForm.invalid">Cadastrar</button>
+  </form>
+
+  <h3>Produtos Cadastrados</h3>
+  <ul>
+    <li *ngFor="let product of products">{{ product.name }}</li>
+  </ul>
+</div>

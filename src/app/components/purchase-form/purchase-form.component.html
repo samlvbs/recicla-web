@@ -12,7 +12,12 @@
         <div [formGroupName]="i" class="product-item">
           <label>
             Produto:
-            <input formControlName="productName" placeholder="Ex: Latinha" />
+            <select formControlName="productName">
+              <option value="" disabled>Selecione um produto</option>
+              <option *ngFor="let product of productsList" [value]="product.name">
+                {{ product.name }}
+              </option>
+            </select>
           </label>
           <label>
             Quantidade:

@@ -17,7 +17,7 @@
   <ng-container *ngFor="let purchase of purchases">
     <div class="purchase-card">
       <h3>{{ purchase.supplierName }}</h3>
-      <p>Data da Compra: {{ purchase.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>
+      <p>Data da Compra: {{ purchase.createdAt | date:'MM/dd/yyyy HH:mm' }}</p>
       <div class="products">
         <div *ngFor="let product of purchase.products" class="product-item">
           <p><strong>Produto:</strong> {{ product.productName }}</p>

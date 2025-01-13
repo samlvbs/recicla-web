@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { collection, collectionData} from '@angular/fire/firestore';
+import { collection, collectionData, Timestamp} from '@angular/fire/firestore';
 
 import { map, Observable } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { map, Observable } from 'rxjs';
 })
 export class PurchaseService {
 
-
+  private productCollection = 'products';
   constructor(private afs: AngularFirestore) {}
 
   getPurchases(purchase: string): Observable<any[]> {
@@ -38,13 +38,13 @@ export class PurchaseService {
       );
   }
 
-  getAllProducts(): Observable<any[]> {
-    return this.afs.collection('purchases').valueChanges().pipe(
-      map((documents: any[]) =>
-        documents.flatMap(doc => doc.products || [])
-      )
-    );
-  }
+  // getAllProducts(): Observable<any[]> {
+  //   return this.afs.collection('purchases').valueChanges().pipe(
+  //     map((documents: any[]) =>
+  //       documents.flatMap(doc => doc.products || [])
+  //     )
+  //   );
+  // }
 
   getAllPurchases(): Observable<any[]> {
     return this.afs.collection('purchases').snapshotChanges().pipe(
@@ -58,15 +58,27 @@ export class PurchaseService {
     );
   }
 
-  convertTimestampToDate(timestamp: any): string {
-    if (!timestamp || !timestamp.toDate) {
-      return 'Data não disponível';
+  convertTimestampToDate(timestamp: any): Date | null {
+    if (timestamp instanceof Timestamp) {
+      return timestamp.toDate();
     }
-    const date = timestamp.toDate();
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+    if (typeof timestamp === 'string' || typeof timestamp === 'number') {
+      return new Date(timestamp);
+    }
+    return null; // Caso não seja um formato conhecido
   }
 
   deletePurchase(id: string){
     return this.afs.doc(`purchases/${id}`).delete()
+  }
+  // ------------------------------------ Produtos ------------------------------------
+  addProduct(product: any): Promise<void> {
+    const id = this.afs.createId(); // Gera um ID único
+    return this.afs.collection(this.productCollection).doc(id).set(product);
+  }
+
+  // Obter todos os produtos
+  getAllProducts(): Observable<any[]> {
+    return this.afs.collection(this.productCollection).valueChanges({ idField: 'id' });
   }
 }

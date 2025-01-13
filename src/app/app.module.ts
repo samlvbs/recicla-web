@@ -12,6 +12,8 @@ import { environment } from '../environment/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProductsComponent } from './components/products/products.component';
+import { CustomerComponent } from './components/customer/customer.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     PurchaseFormComponent,
     PurchaseListComponent,
     NavbarComponent,
+    ProductsComponent,
+    CustomerComponent,
   ],
   imports: [
     BrowserModule,
