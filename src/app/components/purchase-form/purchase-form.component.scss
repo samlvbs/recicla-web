@@ -12,9 +12,8 @@ h3{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 400px;
+  width: 100%;
   margin: auto;
-  padding: 16px;
   background: $form-background;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -24,7 +23,7 @@ h3{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding-top: 20px;
 }
 label {
   display: block;
@@ -46,8 +45,10 @@ label {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   .product-item {
     height: 350px;
+    width: 300px;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -55,12 +56,11 @@ label {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    margin-bottom: 8px;
 
     label {
       text-align: center;
     }
-
     button {
       margin-top: 8px;
       background: red;
@@ -69,6 +69,14 @@ label {
       padding: 4px 8px;
       border-radius: 4px;
       cursor: pointer;
+    }
+    input{
+      width: 80%;
+      margin-top: 4px;
+      border-radius: 4px;
+      font-size: large;
+      font-weight: 600;
+      text-align: center;
     }
   }
 }
@@ -130,4 +138,17 @@ button {
     }
   }
 }
-
+.input-total{
+  color: white;
+  font-weight: 600;
+  font-size: larger;
+  text-align: center;
+}
+.select-products{
+  padding: 8px;
+  border: 1px solid #6b6b6b;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 600;
+  font-size: large;
+}

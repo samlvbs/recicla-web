@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -26,6 +26,7 @@ import { CustomerComponent } from './components/customer/customer.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     RouterModule,
     ReactiveFormsModule,
     AppRoutingModule,

@@ -60,12 +60,12 @@ export class PurchaseService {
 
   convertTimestampToDate(timestamp: any): Date | null {
     if (timestamp instanceof Timestamp) {
-      return timestamp.toDate();
+      return new Date(timestamp.toDate().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
     }
     if (typeof timestamp === 'string' || typeof timestamp === 'number') {
-      return new Date(timestamp);
+      return new Date(new Date(timestamp).toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
     }
-    return null; // Caso não seja um formato conhecido
+    return null;
   }
 
   deletePurchase(id: string){

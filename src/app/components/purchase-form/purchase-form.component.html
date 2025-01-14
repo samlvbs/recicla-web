@@ -11,8 +11,8 @@
       <div formArrayName="products" *ngFor="let product of products.controls; let i = index">
         <div [formGroupName]="i" class="product-item">
           <label>
-            Produto:
-            <select formControlName="productName">
+            <p>Produto:</p>
+            <select class="select-products" formControlName="productName">
               <option value="" disabled>Selecione um produto</option>
               <option *ngFor="let product of productsList" [value]="product.name">
                 {{ product.name }}
@@ -20,16 +20,16 @@
             </select>
           </label>
           <label>
-            Quantidade:
+            <p>Quantidade:</p>
             <input type="number" formControlName="quantity" />
           </label>
           <label>
-            Preço:
+            <p>Preço:</p>
             <input type="number" formControlName="price" />
           </label>
           <label>
             <p>Total:</p>
-            <input formControlName="total"  />
+            <input class="input-total" formControlName="total"  />
           </label>
           <button type="button" (click)="removeProduct(i)">Remover</button>
         </div>

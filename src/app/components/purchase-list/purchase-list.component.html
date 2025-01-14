@@ -10,14 +10,21 @@
   </div>
 </div> -->
 <app-navbar></app-navbar>
+<div class="date-filter">
+  <label for="startDate">Data Inicial:</label>
+  <input type="date" id="startDate" [(ngModel)]="startDate" (change)="filterPurchasesByDate()">
+
+  <label for="endDate">Data Final:</label>
+  <input type="date" id="endDate" [(ngModel)]="endDate" (change)="filterPurchasesByDate()">
+</div>
 <div class="purchase-cards">
-  <div class="total-sum">
+  <div *ngIf="filteredPurchases.length >=1 " class="total-sum">
     <h2>Valor total: R${{ totalSum }}</h2>
   </div>
-  <ng-container *ngFor="let purchase of purchases">
+  <ng-container *ngFor="let purchase of filteredPurchases">
     <div class="purchase-card">
       <h3>{{ purchase.supplierName }}</h3>
-      <p>Data da Compra: {{ purchase.createdAt | date:'MM/dd/yyyy HH:mm' }}</p>
+      <p>Data da Compra: {{ purchase.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>
       <div class="products">
         <div *ngFor="let product of purchase.products" class="product-item">
           <p><strong>Produto:</strong> {{ product.productName }}</p>
