@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 .codegpt
-src/environments/environment.ts
+src/environment/environment.ts
