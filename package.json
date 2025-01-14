@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "^18.1.0",
     "@angular/router": "^18.1.0",
     "compras": "file:",
+    "dotenv": "^16.4.7",
     "firebase": "^11.1.0",
     "ngx-datepicker": "^0.0.0",
     "rxjs": "~7.8.0",
