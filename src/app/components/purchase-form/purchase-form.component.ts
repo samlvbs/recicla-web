@@ -77,7 +77,8 @@ export class PurchaseFormComponent {
   updateTotal(group: FormGroup) {
     const quantity = group.get('quantity')?.value || 0;
     const price = group.get('price')?.value || 0;
-    group.get('total')?.setValue(quantity * price, { emitEvent: false });
+    const total = (quantity * price).toFixed(2);
+    group.get('total')?.setValue(parseFloat(total), { emitEvent: false });
   }
 
   calculateTotalPrice(): number {

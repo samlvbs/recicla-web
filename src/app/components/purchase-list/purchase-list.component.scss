@@ -49,5 +49,25 @@
     color: white;
   }
 }
+.date-filter{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 10px;
+  text-align: center;
+
+  input{
+    padding: 3px;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+
+}
 
 

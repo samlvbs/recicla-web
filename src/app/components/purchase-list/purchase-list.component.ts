@@ -42,7 +42,8 @@ export class PurchaseListComponent implements OnInit {
       this.purchases = data.map(purchase => ({
         ...purchase,
         createdAt: this.purchaseService.convertTimestampToDate(purchase.createdAt),
-      }));
+      }))
+      .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()); // Ordenar por horário
       this.filterPurchasesByDate();
       this.calculateTotalSum()
       this.calculateTotalPurchase()
@@ -64,7 +65,8 @@ export class PurchaseListComponent implements OnInit {
         const purchaseDate = new Date(purchase.createdAt);
 
         return purchaseDate >= normalizedStartDate && purchaseDate <= normalizedEndDate;
-      });
+      })
+      .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()); // Ordenar por horário
     } else {
       // Caso não haja filtro, exibe todas as compras
       this.filteredPurchases = [];
