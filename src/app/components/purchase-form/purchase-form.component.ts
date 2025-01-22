@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Firestore, collection, addDoc, serverTimestamp, collectionData, getDocs } from '@angular/fire/firestore';
-
-
+import { Firestore, collection, addDoc, serverTimestamp, getDocs, query, orderBy, limit, Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-purchase-form',
@@ -13,17 +11,19 @@ export class PurchaseFormComponent {
   purchaseForm: FormGroup;
   isModalOpen = false;
   productsList: any[] = [];
-
+  lastPurchase: any = null;
 
   constructor(private fb: FormBuilder, private firestore: Firestore) {
     this.purchaseForm = this.fb.group({
-      supplierName: ['', Validators.required],
+      supplierName: [''],
       products: this.fb.array([]),
     });
   }
 
   ngOnInit() {
+    this.fetchLastPurchase();  // Busca a última compra ao inicializar o componente
     this.fetchProducts(); // Busca a lista de produtos ao inicializar o componente
+
   }
 
   get products() {
@@ -40,6 +40,38 @@ export class PurchaseFormComponent {
       })); // Mapeia os dados para um formato de objeto
     } catch (error) {
       console.error('Erro ao buscar produtos:', error);
+    }
+  }
+
+  async fetchLastPurchase() {
+    try {
+      const purchasesCollection = collection(this.firestore, 'purchases');
+
+      // Consulta para buscar o último documento com base no campo createdAt
+      const purchasesQuery = query(purchasesCollection, orderBy('createdAt', 'desc'), limit(1));
+      const querySnapshot = await getDocs(purchasesQuery);
+
+      if (!querySnapshot.empty) {
+        const lastPurchaseDoc = querySnapshot.docs[0];
+        const data = lastPurchaseDoc.data();
+
+        // Calcula o total da compra com base nos produtos
+        const total = (data['products'] || []).reduce((sum: number, product: any) => {
+          const quantity = product.quantity || 0;
+          const price = product.price || 0;
+          return sum + quantity * price;
+        }, 0);
+
+        // Atualiza a última compra com o total calculado
+        this.lastPurchase = {
+          id: lastPurchaseDoc.id,
+          ...data,
+          createdAt: (data['createdAt'] as Timestamp).toDate(),
+          total: parseFloat(total.toFixed(2)), // Formata com 2 casas decimais
+        };
+      }
+    } catch (error) {
+      console.error('Erro ao buscar última compra:', error);
     }
   }
 
@@ -103,7 +135,10 @@ export class PurchaseFormComponent {
     data.createdAt = serverTimestamp();
 
     const purchasesCollection = collection(this.firestore, 'purchases');
-    await addDoc(purchasesCollection, data);
+    const docRef = await addDoc(purchasesCollection, data);
+
+    // Atualize a última compra
+    this.lastPurchase = { ...data, id: docRef.id };
 
     this.purchaseForm.reset();
     this.products.clear();

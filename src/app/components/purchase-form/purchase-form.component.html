@@ -38,6 +38,20 @@
     <button type="submit" [disabled]="!purchaseForm.valid">Salvar Compra</button>
   </form>
 </div>
+<div *ngIf="lastPurchase" class="last-purchase-card">
+  <h3>Última Compra Realizada</h3>
+  <p><strong>Fornecedor:</strong> {{ lastPurchase.supplierName }}</p>
+  <p><strong>Data:</strong> {{ lastPurchase.createdAt | date:'dd/MM/yyyy HH:mm'  }}</p>
+  <div *ngIf="lastPurchase.products?.length > 0">
+    <h4>Produtos:</h4>
+    <ul>
+      <li *ngFor="let product of lastPurchase.products">
+        {{ product.productName }} - {{ product.quantity }} unidades - R$ {{ product.total | number: '1.2-2' }}
+      </li>
+    </ul>
+  </div>
+  <p><strong>Total:</strong> R$ {{ lastPurchase.total | number: '1.2-2'  }}</p>
+</div>
 <div class="modal" *ngIf="isModalOpen">
   <div class="modal-content">
     <h2>Preço Total da Compra</h2>

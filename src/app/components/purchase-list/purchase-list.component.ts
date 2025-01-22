@@ -54,7 +54,7 @@ export class PurchaseListComponent implements OnInit {
     if (this.startDate && this.endDate) {
       // Ajusta as datas selecionadas
       const normalizedStartDate = new Date(this.startDate);
-      normalizedStartDate.setDate(normalizedStartDate.getDate() + 1); // Reduz um dia no início
+      normalizedStartDate.setDate(normalizedStartDate.getDate() + 1); // Adiciona um dia no início
       normalizedStartDate.setHours(0, 0, 0, 0); // Ajusta para o início do dia
 
       const normalizedEndDate = new Date(this.endDate);
@@ -66,7 +66,7 @@ export class PurchaseListComponent implements OnInit {
 
         return purchaseDate >= normalizedStartDate && purchaseDate <= normalizedEndDate;
       })
-      .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()); // Ordenar por horário
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()); // Ordenar por horário
     } else {
       // Caso não haja filtro, exibe todas as compras
       this.filteredPurchases = [];

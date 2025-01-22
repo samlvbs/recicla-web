@@ -18,11 +18,11 @@
       Lucro:
       <input type="number" formControlName="profit" placeholder="Lucro" />
     </label>
-    <button type="submit" [disabled]="productForm.invalid">Cadastrar</button>
+    <button style="margin-top: 10px;" type="submit" [disabled]="productForm.invalid">Cadastrar</button>
   </form>
 
   <h3>Produtos Cadastrados</h3>
   <ul>
-    <li *ngFor="let product of products">{{ product.name }}</li>
+    <li class="products" *ngFor="let product of products">{{ product.name }} | R${{product.purchasePrice}}</li>
   </ul>
 </div>
